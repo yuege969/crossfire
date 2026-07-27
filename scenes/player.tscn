@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://pbmoqjvodepq"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_8k2g0"]
+[ext_resource type="PackedScene" path="res://scenes/bullet.tscn" id="2_bullet"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0c4k"]
+
+[node name="Player" type="CharacterBody2D" unique_id=566906046]
+script = ExtResource("1_8k2g0")
+bullet_scene = ExtResource("2_bullet")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=468016634]
+shape = SubResource("CapsuleShape2D_p0c4k")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1038093644]
+zoom = Vector2(3, 3)
