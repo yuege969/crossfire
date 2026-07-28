@@ -35,10 +35,37 @@ func _initialize() -> void:
 		level.free()
 		quit(1)
 		return
+	var sanitize_error := _strip_volatile_node_ids()
+	if sanitize_error != OK:
+		push_error("Failed to stabilize Level 1 node IDs: %s" % error_string(sanitize_error))
+		level.free()
+		quit(1)
+		return
 
 	print("Built %s" % LEVEL_PATH)
 	level.free()
 	quit(0)
+
+
+func _strip_volatile_node_ids() -> Error:
+	var read_file := FileAccess.open(LEVEL_PATH, FileAccess.READ)
+	if read_file == null:
+		return FileAccess.get_open_error()
+	var scene_source := read_file.get_as_text()
+	read_file.close()
+
+	var volatile_id_pattern := RegEx.new()
+	var compile_error := volatile_id_pattern.compile(" unique_id=\\d+")
+	if compile_error != OK:
+		return compile_error
+	scene_source = volatile_id_pattern.sub(scene_source, "", true)
+
+	var write_file := FileAccess.open(LEVEL_PATH, FileAccess.WRITE)
+	if write_file == null:
+		return FileAccess.get_open_error()
+	write_file.store_string(scene_source)
+	write_file.close()
+	return OK
 
 
 func _build_level() -> Node2D:

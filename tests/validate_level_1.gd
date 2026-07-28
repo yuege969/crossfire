@@ -12,6 +12,13 @@ var failures: Array[String] = []
 
 
 func _initialize() -> void:
+	var level_source := FileAccess.get_file_as_string(LEVEL_PATH)
+	var volatile_id_pattern := RegEx.new()
+	volatile_id_pattern.compile(" unique_id=\\d+")
+	_expect(
+		volatile_id_pattern.search(level_source) == null,
+		"Generated Level1 scene must not contain volatile node IDs"
+	)
 	_expect(
 		ProjectSettings.get_setting("application/run/main_scene") == LEVEL_PATH,
 		"Project main scene must use a stable Level1 path"
