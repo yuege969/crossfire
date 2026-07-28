@@ -5,11 +5,13 @@ extends CharacterBody2D
 @export var gravity: float = 1200.0
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 0.15
+@export var marker_distance: float = 40.0
 
 var _fire_timer: float = 0.0
 @onready var _legs_sprite: Sprite2D = $Legs
 @onready var _legs_anim: AnimationPlayer = $Legs/AnimationPlayer
 @onready var _torso_sprite: Sprite2D = $Torso
+@onready var _marker: Sprite2D = $Marker
 
 func _physics_process(delta: float) -> void:
 	_fire_timer -= delta
@@ -33,6 +35,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animation(direction)
 	_update_torso_direction()
+	_update_marker()
 
 func _update_animation(direction: float) -> void:
 	if direction < 0.0:
@@ -59,6 +62,11 @@ func _shoot() -> void:
 	bullet.global_position = global_position + bullet.direction * 20.0
 	get_tree().current_scene.add_child(bullet)
 
+	# Marker scale pop feedback
+	var tween := create_tween()
+	tween.tween_property(_marker, "scale", Vector2(0.3, 0.3), 0.05)
+	tween.tween_property(_marker, "scale", Vector2(0.5, 0.5), 0.1).set_ease(Tween.EASE_OUT)
+
 func _update_torso_direction() -> void:
 	var mouse_pos := get_global_mouse_position()
 	var angle := (mouse_pos - global_position).angle()
@@ -69,3 +77,13 @@ func _update_torso_direction() -> void:
 	# Frame mapping: 0→, 1↘, 2↓, 3↙, 4←, 5↖, 6↑, 7↗
 	var frame := roundi(angle / (PI / 4.0)) % 8
 	_torso_sprite.frame = frame
+
+func _update_marker() -> void:
+	var mouse_pos := get_global_mouse_position()
+	var angle := (mouse_pos - global_position).angle()
+	if angle < 0:
+		angle += 2 * PI
+	var dir_index := roundi(angle / (PI / 4.0)) % 8
+	var angle_snapped := float(dir_index) * PI / 4.0
+	var direction := Vector2(cos(angle_snapped), sin(angle_snapped))
+	_marker.global_position = global_position + direction * marker_distance
