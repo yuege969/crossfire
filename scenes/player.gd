@@ -7,6 +7,8 @@ extends CharacterBody2D
 @export var fire_rate: float = 0.15
 
 var _fire_timer: float = 0.0
+@onready var _legs_sprite: Sprite2D = $Legs
+@onready var _legs_anim: AnimationPlayer = $Legs/AnimationPlayer
 
 func _physics_process(delta: float) -> void:
 	_fire_timer -= delta
@@ -28,6 +30,20 @@ func _physics_process(delta: float) -> void:
 		_fire_timer = fire_rate
 
 	move_and_slide()
+	_update_animation(direction)
+
+func _update_animation(direction: float) -> void:
+	if direction < 0.0:
+		_legs_sprite.flip_h = true
+	elif direction > 0.0:
+		_legs_sprite.flip_h = false
+
+	if not is_on_floor():
+		_legs_anim.play("jump")
+	elif direction != 0.0:
+		_legs_anim.play("run")
+	else:
+		_legs_anim.play("idle")
 
 func _shoot() -> void:
 	var bullet := bullet_scene.instantiate() as Area2D

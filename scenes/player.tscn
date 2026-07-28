@@ -1,9 +1,81 @@
 [gd_scene format=3 uid="uid://pbmoqjvodepq"]
 
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_8k2g0"]
+[ext_resource type="Script" uid="uid://bkdaej7l2moxw" path="res://scenes/player.gd" id="1_8k2g0"]
 [ext_resource type="PackedScene" path="res://scenes/bullet.tscn" id="2_bullet"]
+[ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="2_sprite"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0c4k"]
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "run"
+length = 1.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
+_data = {
+&"RESET": SubResource("Animation_qhqgy"),
+&"idle": SubResource("Animation_qlg0r"),
+&"jump": SubResource("Animation_tuyoq"),
+&"run": SubResource("Animation_dqkch")
+}
 
 [node name="Player" type="CharacterBody2D" unique_id=566906046]
 script = ExtResource("1_8k2g0")
@@ -13,4 +85,15 @@ bullet_scene = ExtResource("2_bullet")
 shape = SubResource("CapsuleShape2D_p0c4k")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1038093644]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
+
+[node name="Legs" type="Sprite2D" parent="." unique_id=959523248]
+position = Vector2(0, -7)
+texture = ExtResource("2_sprite")
+hframes = 8
+vframes = 3
+frame = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Legs" unique_id=225724889]
+libraries/ = SubResource("AnimationLibrary_qlg0r")
+autoplay = &"idle"
