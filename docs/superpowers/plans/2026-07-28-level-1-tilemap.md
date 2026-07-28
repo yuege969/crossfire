@@ -24,6 +24,7 @@
 - `tools/build_level_1.gd`: deterministic scene builder; owns atlas creation, collision tile configuration, module stamping, layer ordering, and scene saving.
 - `tests/validate_level_1.gd`: headless structural and playability-contract checks for the saved scene.
 - `scenes/levels/level_1.tscn`: generated playable Level 1 scene and project main scene.
+- `project.godot`: references Level 1 by stable resource path so regeneration does not depend on the editor UID cache.
 
 ### Task 1: Level validation contract
 
@@ -113,6 +114,7 @@ git commit -m "test: define Level 1 tilemap contract"
 **Files:**
 - Create: `tools/build_level_1.gd`
 - Modify: `scenes/levels/level_1.tscn`
+- Modify: `project.godot`
 - Test: `tests/validate_level_1.gd`
 
 **Interfaces:**
@@ -192,7 +194,7 @@ Write:
 - staircase platforms with no vertical step larger than three cells;
 - an exit platform at row `21`.
 
-Place Player at `Vector2(72, 336)` and `LevelExit` at `Vector2(4024, 320)`. No platform may be narrower than four cells.
+Place Player at `Vector2(72, 336)` and align `LevelExit` with the green exit structure at `Vector2(3720, 320)`. No platform may be narrower than four cells.
 
 - [ ] **Step 5: Save the generated scene**
 
@@ -213,6 +215,8 @@ Run:
 ```
 
 Expected: exit `0` and a regenerated `level_1.tscn`.
+
+Set `application/run/main_scene` in `project.godot` to `res://scenes/levels/level_1.tscn`. This stable path remains valid when the deterministic builder rewrites the scene and the headless resource UID cache has not yet been refreshed.
 
 - [ ] **Step 6: Run the validation contract**
 
