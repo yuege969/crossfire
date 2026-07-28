@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bkdaej7l2moxw" path="res://scenes/player.gd" id="1_8k2g0"]
 [ext_resource type="PackedScene" path="res://scenes/bullet.tscn" id="2_bullet"]
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="2_sprite"]
+[ext_resource type="Texture2D" uid="uid://otyoj5px7yk7" path="res://graphics/ui/crosshair.png" id="4_dqkch"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0c4k"]
 
@@ -92,8 +93,21 @@ position = Vector2(0, -7)
 texture = ExtResource("2_sprite")
 hframes = 8
 vframes = 3
-frame = 9
+frame = 16
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Legs" unique_id=225724889]
 libraries/ = SubResource("AnimationLibrary_qlg0r")
 autoplay = &"idle"
+
+[node name="Torso" type="Sprite2D" parent="." unique_id=836117978]
+position = Vector2(0, -9)
+texture = ExtResource("2_sprite")
+hframes = 8
+vframes = 3
+frame = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Torso" unique_id=624938758]
+
+[node name="Marker" type="Sprite2D" parent="." unique_id=827317801]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_dqkch")

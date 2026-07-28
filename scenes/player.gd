@@ -9,6 +9,7 @@ extends CharacterBody2D
 var _fire_timer: float = 0.0
 @onready var _legs_sprite: Sprite2D = $Legs
 @onready var _legs_anim: AnimationPlayer = $Legs/AnimationPlayer
+@onready var _torso_sprite: Sprite2D = $Torso
 
 func _physics_process(delta: float) -> void:
 	_fire_timer -= delta
@@ -31,6 +32,7 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	_update_animation(direction)
+	_update_torso_direction()
 
 func _update_animation(direction: float) -> void:
 	if direction < 0.0:
@@ -48,6 +50,22 @@ func _update_animation(direction: float) -> void:
 func _shoot() -> void:
 	var bullet := bullet_scene.instantiate() as Area2D
 	var mouse_pos := get_global_mouse_position()
-	bullet.direction = (mouse_pos - global_position).normalized()
+	var angle := (mouse_pos - global_position).angle()
+	if angle < 0:
+		angle += 2 * PI
+	# Snap to 8 directions (same as torso facing)
+	var snapped_angle := float(roundi(angle / (PI / 4.0)) % 8) * (PI / 4.0)
+	bullet.direction = Vector2(cos(snapped_angle), sin(snapped_angle))
 	bullet.global_position = global_position + bullet.direction * 20.0
 	get_tree().current_scene.add_child(bullet)
+
+func _update_torso_direction() -> void:
+	var mouse_pos := get_global_mouse_position()
+	var angle := (mouse_pos - global_position).angle()
+	# Normalize angle from [-PI, PI] to [0, 2*PI)
+	if angle < 0:
+		angle += 2 * PI
+	# 8 directions, frame 0 = right (0°), each frame rotates 45° clockwise
+	# Frame mapping: 0→, 1↘, 2↓, 3↙, 4←, 5↖, 6↑, 7↗
+	var frame := roundi(angle / (PI / 4.0)) % 8
+	_torso_sprite.frame = frame
