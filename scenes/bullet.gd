@@ -17,7 +17,9 @@ func _physics_process(delta: float) -> void:
 	if lifetime <= 0.0:
 		queue_free()
 
-func _on_body_entered(_body: Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
 	if _grace_period > 0.0:
 		return
+	if body.has_method("on_hit_by_bullet"):
+		body.on_hit_by_bullet()
 	queue_free()
