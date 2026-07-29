@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c7v0ifpdabs2i" path="res://graphics/tilesets/subway.png" id="1_oc4kc"]
 [ext_resource type="Texture2D" uid="uid://cgh7234wked4l" path="res://graphics/tilesets/walls.png" id="2_s8va5"]
 [ext_resource type="PackedScene" uid="uid://pbmoqjvodepq" path="res://scenes/player.tscn" id="3_dga24"]
+[ext_resource type="PackedScene" uid="uid://2utjcle75dc6" path="res://scenes/drone.tscn" id="4_x42e6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mm8aj"]
 texture = ExtResource("1_oc4kc")
@@ -2267,6 +2268,7 @@ _data = {
 [node name="Level1" type="Node2D" unique_id=507294724]
 
 [node name="Layers" type="Node2D" parent="." unique_id=150721711]
+metadata/_edit_lock_ = true
 
 [node name="BGLayer" type="TileMapLayer" parent="Layers" unique_id=1408475985]
 modulate = Color(0.47, 0.54, 0.49, 1)
@@ -2295,6 +2297,7 @@ collision_enabled = false
 
 [node name="Entities" type="Node2D" parent="." unique_id=2048663930]
 z_index = 10
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="Entities" unique_id=577646236 instance=ExtResource("3_dga24")]
 position = Vector2(72, 433)
@@ -2312,7 +2315,12 @@ limit_bottom = 480
 libraries/ = SubResource("AnimationLibrary_qlg0r")
 
 [node name="LevelExit" type="Marker2D" parent="Entities" unique_id=2092388067]
+position = Vector2(2988, 416)
+
+[node name="Drone" parent="Entities" unique_id=369366133 instance=ExtResource("4_x42e6")]
+position = Vector2(283, 345)
 
 [node name="bullets" type="Node2D" parent="." unique_id=1039658271]
+metadata/_edit_lock_ = true
 
 [editable path="Entities/Player"]
