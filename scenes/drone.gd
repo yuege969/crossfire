@@ -14,6 +14,7 @@ var _player: CharacterBody2D = null
 func _ready() -> void:
 	add_to_group("drone")
 	_detection_area.body_entered.connect(_on_detection_body_entered)
+	_detection_area.body_exited.connect(_on_detection_body_exited)
 	_animated_sprite.animation_finished.connect(_on_animation_finished)
 
 
@@ -36,9 +37,18 @@ func _physics_process(_delta: float) -> void:
 
 
 func _on_detection_body_entered(body: Node2D) -> void:
-	if state == State.IDLE and body.is_in_group("player"):
+	if not body.is_in_group("player"):
+		return
+	if state == State.DYING:
+		return
+	if state == State.IDLE or (state == State.CHASE and _player == null):
 		_player = body
 		state = State.CHASE
+
+
+func _on_detection_body_exited(body: Node2D) -> void:
+	if body == _player:
+		_player = null
 
 
 func on_hit_by_bullet() -> void:
