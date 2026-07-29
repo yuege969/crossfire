@@ -1,8 +1,8 @@
-extends CanvasLayer
+extends Node2D
 
 
 func _ready() -> void:
-	$VBoxContainer/RestartButton.pressed.connect(_on_restart_button_pressed)
+	$CanvasLayer/VBoxContainer/RestartButton.pressed.connect(_on_restart_button_pressed)
 
 
 func _on_restart_button_pressed() -> void:
