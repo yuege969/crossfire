@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://vyr0ks75oxum" path="res://graphics/characters/drone.png" id="1_dil0n"]
 [ext_resource type="Texture2D" uid="uid://bav7n447bnsa5" path="res://graphics/fire/explosion.png" id="2_knnud"]
-[ext_resource type="Script" path="res://scenes/drone.gd" id="3_drone_script"]
+[ext_resource type="Script" uid="uid://bsbt2wnms5c2b" path="res://scenes/drone.gd" id="3_drone_script"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_knnud"]
 atlas = ExtResource("1_dil0n")
@@ -105,12 +105,13 @@ animations = [{
 radius = 7.071068
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k4mdm"]
-radius = 126.01587
+radius = 99.00505
 
 [node name="Drone" type="CharacterBody2D" unique_id=369366133]
-script = ExtResource("3_drone_script")
 collision_layer = 4
 collision_mask = 11
+script = ExtResource("3_drone_script")
+speed = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1484926433]
 sprite_frames = SubResource("SpriteFrames_p0c4k")
