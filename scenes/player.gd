@@ -99,3 +99,8 @@ func die() -> void:
 	hide()
 	var ui: Node = load("res://scenes/game_over_ui.tscn").instantiate()
 	get_tree().current_scene.add_child(ui)
+
+
+func freeze() -> void:
+	set_physics_process(false)
+	set_process(false)
