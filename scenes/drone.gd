@@ -5,6 +5,8 @@ extends CharacterBody2D
 enum State { IDLE, CHASE, DYING }
 var state: State = State.IDLE
 var _player: CharacterBody2D = null
+var _hit_player: bool = false
+var _stored_player: CharacterBody2D = null
 
 @onready var _detection_area: Area2D = $DetctionArea
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -62,9 +64,19 @@ func on_hit_by_bullet() -> void:
 
 func _on_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
+		if _hit_player and _stored_player and _stored_player.has_method("die"):
+			_stored_player.die()
 		queue_free()
 
 
 func _on_hit_player(p: Node2D) -> void:
-	if p.has_method("die"):
-		p.die()
+	if state == State.DYING:
+		return
+	_stored_player = p
+	_hit_player = true
+	state = State.DYING
+	_collision_shape.set_deferred("disabled", true)
+	_detection_area.set_deferred("monitoring", false)
+	_animated_sprite.play("die")
+	if p.has_method("freeze"):
+		p.freeze()
