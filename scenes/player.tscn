@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://pbmoqjvodepq"]
 
 [ext_resource type="Script" uid="uid://bkdaej7l2moxw" path="res://scenes/player.gd" id="1_8k2g0"]
-[ext_resource type="PackedScene" path="res://scenes/bullet.tscn" id="2_bullet"]
+[ext_resource type="PackedScene" uid="uid://diysarysvdpbj" path="res://scenes/bullet.tscn" id="2_bullet"]
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="2_sprite"]
 [ext_resource type="Texture2D" uid="uid://otyoj5px7yk7" path="res://graphics/ui/crosshair.png" id="4_dqkch"]
 
@@ -79,7 +79,11 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=566906046]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_8k2g0")
+speed = 150.0
+jump_velocity = -350.0
 bullet_scene = ExtResource("2_bullet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=468016634]
@@ -87,6 +91,10 @@ shape = SubResource("CapsuleShape2D_p0c4k")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1038093644]
 zoom = Vector2(2, 2)
+limit_left = -7
+limit_top = -5
+limit_right = 195
+limit_bottom = 30
 
 [node name="Legs" type="Sprite2D" parent="." unique_id=959523248]
 position = Vector2(0, -7)
@@ -104,9 +112,6 @@ position = Vector2(0, -9)
 texture = ExtResource("2_sprite")
 hframes = 8
 vframes = 3
-frame = 7
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Torso" unique_id=624938758]
 
 [node name="Marker" type="Sprite2D" parent="." unique_id=827317801]
 scale = Vector2(0.5, 0.5)
