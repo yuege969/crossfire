@@ -57,12 +57,35 @@ func _on_detection_body_exited(body: Node2D) -> void:
 
 
 func on_hit_by_bullet() -> void:
+	trigger_chain_explosion(0)
+
+
+func trigger_chain_explosion(chain_depth: int) -> void:
 	if state == State.DYING:
 		return
+
 	state = State.DYING
 	_collision_shape.set_deferred("disabled", true)
 	_detection_area.set_deferred("monitoring", false)
 	_animated_sprite.play("die")
+
+	if chain_depth < max_chain_depth:
+		await get_tree().create_timer(chain_delay).timeout
+		_trigger_nearby_drones(chain_depth)
+
+
+func _trigger_nearby_drones(chain_depth: int) -> void:
+	var drones: Array[Node] = get_tree().get_nodes_in_group("drone")
+	for drone in drones:
+		if drone == self:
+			continue
+		if not drone is CharacterBody2D:
+			continue
+		if drone.state == State.DYING:
+			continue
+		var distance := global_position.distance_to(drone.global_position)
+		if distance <= chain_radius:
+			drone.trigger_chain_explosion(chain_depth + 1)
 
 
 func _on_animation_finished() -> void:
@@ -77,9 +100,6 @@ func _on_hit_player(p: Node2D) -> void:
 		return
 	_stored_player = p
 	_hit_player = true
-	state = State.DYING
-	_collision_shape.set_deferred("disabled", true)
-	_detection_area.set_deferred("monitoring", false)
-	_animated_sprite.play("die")
 	if p.has_method("freeze"):
 		p.freeze()
+	trigger_chain_explosion(0)
