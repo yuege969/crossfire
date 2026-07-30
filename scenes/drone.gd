@@ -80,7 +80,7 @@ func trigger_chain_explosion(chain_depth: int) -> void:
 
 
 func _trigger_nearby_drones(chain_depth: int) -> void:
-	var drones: Array[Node] = get_tree().get_nodes_in_group("Drones")
+	var drones: Array[Node] = get_tree().get_nodes_in_group("drone")
 	for drone in drones:
 		if drone == self:
 			continue
