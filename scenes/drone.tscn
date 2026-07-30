@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://vyr0ks75oxum" path="res://graphics/characters/drone.png" id="1_dil0n"]
 [ext_resource type="Texture2D" uid="uid://bav7n447bnsa5" path="res://graphics/fire/explosion.png" id="2_knnud"]
 [ext_resource type="Script" uid="uid://bsbt2wnms5c2b" path="res://scenes/drone.gd" id="3_drone_script"]
+[ext_resource type="Texture2D" uid="uid://dijla4pisrrw8" path="res://graphics/lights/main.png" id="4_umx5g"]
+[ext_resource type="AudioStream" uid="uid://dtnqyh7corvdx" path="res://audio/explosion.wav" id="5_k1p8w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_knnud"]
 atlas = ExtResource("1_dil0n")
@@ -107,24 +109,78 @@ radius = 7.071068
 [sub_resource type="CircleShape2D" id="CircleShape2D_k4mdm"]
 radius = 99.00505
 
+[sub_resource type="Animation" id="Animation_k1p8w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.22]
+}
+
+[sub_resource type="Animation" id="Animation_f6asb"]
+resource_name = "red_light"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.25, 0.22]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nxcwj"]
+_data = {
+&"RESET": SubResource("Animation_k1p8w"),
+&"red_light": SubResource("Animation_f6asb")
+}
+
 [node name="Drone" type="CharacterBody2D" unique_id=369366133 groups=["Drones"]]
 collision_layer = 4
 collision_mask = 11
 script = ExtResource("3_drone_script")
-speed = 80.0
+speed = 50.0
 chain_radius = 80.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1484926433]
 sprite_frames = SubResource("SpriteFrames_p0c4k")
-animation = &"die"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351963489]
+visible = false
 shape = SubResource("CircleShape2D_p0c4k")
 
 [node name="DetctionArea" type="Area2D" parent="." unique_id=203043940]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetctionArea" unique_id=1381988740]
+visible = false
 shape = SubResource("CircleShape2D_k4mdm")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1469775120]
+position = Vector2(-2, 3)
+scale = Vector2(0.1, 0.1)
+color = Color(1, 0.09803922, 0.10980392, 1)
+energy = 0.22
+texture = ExtResource("4_umx5g")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1193909091]
+libraries/ = SubResource("AnimationLibrary_nxcwj")
+autoplay = &"red_light"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1609124116]
+stream = ExtResource("5_k1p8w")

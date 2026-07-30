@@ -14,6 +14,7 @@ var _stored_player: CharacterBody2D = null
 @onready var _detection_area: Area2D = $DetctionArea
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var _audio_explosion: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 func _ready() -> void:
@@ -68,6 +69,7 @@ func trigger_chain_explosion(chain_depth: int) -> void:
 	_collision_shape.set_deferred("disabled", true)
 	_detection_area.set_deferred("monitoring", false)
 	_animated_sprite.play("die")
+	_audio_explosion.play()
 
 	if chain_depth < max_chain_depth:
 		await get_tree().create_timer(chain_delay).timeout

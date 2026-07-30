@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dijfid84ad4nx"]
 
 [ext_resource type="Texture2D" uid="uid://c7v0ifpdabs2i" path="res://graphics/tilesets/subway.png" id="1_oc4kc"]
+[ext_resource type="Script" uid="uid://c42bh535e5d1p" path="res://scenes/levels/level_1.gd" id="1_sk5k4"]
 [ext_resource type="Texture2D" uid="uid://cgh7234wked4l" path="res://graphics/tilesets/walls.png" id="2_s8va5"]
 [ext_resource type="PackedScene" uid="uid://pbmoqjvodepq" path="res://scenes/player.tscn" id="3_dga24"]
 [ext_resource type="PackedScene" uid="uid://2utjcle75dc6" path="res://scenes/drone.tscn" id="4_x42e6"]
@@ -2273,6 +2274,7 @@ gradient = SubResource("Gradient_x42e6")
 fill_from = Vector2(0.27564102, 0.5470086)
 
 [node name="Level1" type="Node2D" unique_id=507294724]
+script = ExtResource("1_sk5k4")
 
 [node name="Layers" type="Node2D" parent="." unique_id=150721711]
 

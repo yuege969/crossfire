@@ -2,12 +2,14 @@ extends Area2D
 
 @export var speed: float = 600.0
 @export var lifetime: float = 2.0
+@onready var _audio_bullit:AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var direction: Vector2 = Vector2.RIGHT
 var _grace_period: float = 0.05
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	_audio_bullit.play()
 
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
