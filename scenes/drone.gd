@@ -57,12 +57,7 @@ func _on_detection_body_exited(body: Node2D) -> void:
 
 
 func on_hit_by_bullet() -> void:
-	if state == State.DYING:
-		return
-	state = State.DYING
-	_collision_shape.set_deferred("disabled", true)
-	_detection_area.set_deferred("monitoring", false)
-	_animated_sprite.play("die")
+	trigger_chain_explosion(0)
 
 
 func trigger_chain_explosion(chain_depth: int) -> void:
@@ -105,9 +100,6 @@ func _on_hit_player(p: Node2D) -> void:
 		return
 	_stored_player = p
 	_hit_player = true
-	state = State.DYING
-	_collision_shape.set_deferred("disabled", true)
-	_detection_area.set_deferred("monitoring", false)
-	_animated_sprite.play("die")
 	if p.has_method("freeze"):
 		p.freeze()
+	trigger_chain_explosion(0)
