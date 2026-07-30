@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://diysarysvdpbj" path="res://scenes/bullet.tscn" id="2_bullet"]
 [ext_resource type="Texture2D" uid="uid://de5wf7al0hknv" path="res://graphics/characters/player.png" id="2_sprite"]
 [ext_resource type="Texture2D" uid="uid://otyoj5px7yk7" path="res://graphics/ui/crosshair.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://dijla4pisrrw8" path="res://graphics/lights/main.png" id="5_qlg0r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0c4k"]
 
@@ -116,3 +117,6 @@ vframes = 3
 [node name="Marker" type="Sprite2D" parent="." unique_id=827317801]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_dqkch")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1066173947]
+texture = ExtResource("5_qlg0r")

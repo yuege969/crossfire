@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cgh7234wked4l" path="res://graphics/tilesets/walls.png" id="2_s8va5"]
 [ext_resource type="PackedScene" uid="uid://pbmoqjvodepq" path="res://scenes/player.tscn" id="3_dga24"]
 [ext_resource type="PackedScene" uid="uid://2utjcle75dc6" path="res://scenes/drone.tscn" id="4_x42e6"]
+[ext_resource type="Texture2D" uid="uid://6j2he24a4uda" path="res://graphics/lights/l3.png" id="5_6761a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mm8aj"]
 texture = ExtResource("1_oc4kc")
@@ -2265,6 +2266,12 @@ _data = {
 &"run": SubResource("Animation_dqkch")
 }
 
+[sub_resource type="Gradient" id="Gradient_x42e6"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k4mdm"]
+gradient = SubResource("Gradient_x42e6")
+fill_from = Vector2(0.27564102, 0.5470086)
+
 [node name="Level1" type="Node2D" unique_id=507294724]
 
 [node name="Layers" type="Node2D" parent="." unique_id=150721711]
@@ -2317,9 +2324,71 @@ libraries/ = SubResource("AnimationLibrary_qlg0r")
 position = Vector2(2988, 416)
 
 [node name="Drone" parent="Entities" unique_id=369366133 instance=ExtResource("4_x42e6")]
-position = Vector2(283, 345)
+position = Vector2(259, 339)
 
-[node name="bullets" type="Node2D" parent="." unique_id=1039658271]
+[node name="Drone2" parent="Entities" unique_id=2076287409 instance=ExtResource("4_x42e6")]
+position = Vector2(661, 290)
+
+[node name="Drone3" parent="Entities" unique_id=221077455 instance=ExtResource("4_x42e6")]
+position = Vector2(1021, 290)
+
+[node name="Drone4" parent="Entities" unique_id=150019608 instance=ExtResource("4_x42e6")]
+position = Vector2(1435, 290)
+
+[node name="Drone5" parent="Entities" unique_id=1619845990 instance=ExtResource("4_x42e6")]
+position = Vector2(1827, 290)
+
+[node name="Drone6" parent="Entities" unique_id=2106426536 instance=ExtResource("4_x42e6")]
+position = Vector2(1411, 241)
+
+[node name="Bullets" type="Node2D" parent="." unique_id=1039658271]
 metadata/_edit_lock_ = true
+
+[node name="Lights" type="Node2D" parent="." unique_id=1219047668]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Lights" unique_id=1736946277]
+color = Color(0.33101895, 0.33101892, 0.33101892, 1)
+energy = 0.82
+blend_mode = 2
+
+[node name="DoorPointLight2" type="PointLight2D" parent="Lights" unique_id=1892797229]
+position = Vector2(2880, 381)
+color = Color(0, 1, 1, 1)
+texture = SubResource("GradientTexture2D_k4mdm")
+
+[node name="DoorPointLight" type="PointLight2D" parent="Lights" unique_id=1902631871]
+position = Vector2(128, 90)
+color = Color(0, 1, 1, 1)
+texture = SubResource("GradientTexture2D_k4mdm")
+
+[node name="A1PointLight" type="PointLight2D" parent="Lights" unique_id=1192469765]
+position = Vector2(80, 375)
+energy = 1.14
+texture = ExtResource("5_6761a")
+
+[node name="A2PointLight" type="PointLight2D" parent="Lights" unique_id=1899026130]
+position = Vector2(2993, 375)
+energy = 1.38
+texture = ExtResource("5_6761a")
+
+[node name="R1PointLight" type="PointLight2D" parent="Lights" unique_id=221185710]
+position = Vector2(225, 376)
+texture = ExtResource("5_6761a")
+
+[node name="R2PointLight" type="PointLight2D" parent="Lights" unique_id=1475085939]
+position = Vector2(672, 376)
+texture = ExtResource("5_6761a")
+
+[node name="R3PointLight" type="PointLight2D" parent="Lights" unique_id=176177388]
+position = Vector2(1376, 376)
+texture = ExtResource("5_6761a")
+
+[node name="R4PointLight" type="PointLight2D" parent="Lights" unique_id=1158124584]
+position = Vector2(2081, 376)
+texture = ExtResource("5_6761a")
+
+[node name="R5PointLight" type="PointLight2D" parent="Lights" unique_id=1455043341]
+position = Vector2(2608, 375)
+texture = ExtResource("5_6761a")
 
 [editable path="Entities/Player"]
