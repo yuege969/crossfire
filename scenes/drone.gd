@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
 @export var speed: float = 150.0
+@export var chain_radius: float = 50.0
+@export var chain_delay: float = 0.15
+@export var max_chain_depth: int = 3
 
 enum State { IDLE, CHASE, DYING }
 var state: State = State.IDLE
